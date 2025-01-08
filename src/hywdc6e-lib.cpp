@@ -15,7 +15,7 @@ void sendModbusRequest()
 {
     digitalWrite(RS485_DE_PIN, HIGH); // Set to HIGH for transmit mode (TX)
     digitalWrite(RS485_RE_PIN, HIGH); // Set to HIGH for transmit mode (TX)
-    Serial1.write(request, sizeof(request) + 2);
+    Serial1.write(request_ane, sizeof(request_ane) + 2);
     delay(10);                       // Ensure data is sent before switching back
     digitalWrite(RS485_DE_PIN, LOW); // Set to LOW for receive mode (RX)
     digitalWrite(RS485_RE_PIN, LOW); // Set to LOW for receive mode (RX)
