@@ -18,12 +18,13 @@
 #endif
 
 #ifndef RESPONSE_TIMEOUT
-#define RESPONSE_TIMEOUT 1000 // Timeout for response (in milliseconds)
+#define RESPONSE_TIMEOUT 10000 // Timeout for response (in milliseconds)
 #endif
 
 #ifndef DEBUG
 #define DEBUG true // Enable debug output
 #endif
+
 
 
 /**

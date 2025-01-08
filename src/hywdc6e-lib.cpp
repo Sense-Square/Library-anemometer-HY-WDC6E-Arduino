@@ -162,6 +162,12 @@ unsigned short convertToShortLittleEndian(const uint8_t *data)
 }
 
 void get_raw_response(uint8_t *buffer, size_t bufferSize, size_t *bytesRead) {
+
+    //pulire il buffer
+    for (int i = 0; i < bufferSize; i++)
+    {
+        buffer[i] = 0;
+    }
   // Inizializza il contatore dei byte letti
   *bytesRead = 0;
   unsigned long startTime = millis();
@@ -180,6 +186,8 @@ void get_raw_response(uint8_t *buffer, size_t bufferSize, size_t *bytesRead) {
     Serial.println("No response received (timeout). Checking available bytes:");
     Serial.println(Serial1.available());  // Print available bytes
   }
+
+    
 }
 
 bool is_connected(){
@@ -196,5 +204,10 @@ bool is_connected(){
     else
     {
         return false;
+    }
+
+    for (int i = 0; i < bytesRead; i++)
+    {
+        response[i] = 0;
     }
 }
