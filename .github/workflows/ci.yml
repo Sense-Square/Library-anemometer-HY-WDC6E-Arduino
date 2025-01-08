@@ -1,0 +1,26 @@
+name: Arduino Library Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Rilascia solo quando il tag segue il formato `vX.Y.Z`
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Pubblica una release
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            src/**
+            library.properties
+            examples/**
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
