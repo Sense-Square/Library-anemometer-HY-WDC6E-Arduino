@@ -2,18 +2,35 @@ name: Arduino Library Release
 
 on:
   push:
-    tags:
-      - 'v*' # Rilascia solo quando il tag segue il formato `vX.Y.Z`
+    branches:
+      - main # Esegui il workflow solo sul branch `main`
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # 1. Controlla che il commit message segua il pattern `vX.Y.Z`
+      - name: Check commit message
+        id: check_message
+        run: |
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+          if [[ ! "${{ github.event.head_commit.message }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Commit message does not match pattern vX.Y.Z. Skipping."
+            exit 1
+          fi
+
+      # 2. Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Pubblica una release
+      # 3. Imposta Arduino CLI (opzionale)
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1
+        with:
+          version: 0.32.2
+
+      # 5. Crea la release su GitHub
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -21,6 +38,5 @@ jobs:
             src/**
             library.properties
             examples/**
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
