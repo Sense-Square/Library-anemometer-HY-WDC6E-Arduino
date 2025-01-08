@@ -1,6 +1,8 @@
 
 #include "hywdc6e-lib.h"
 
+uint8_t request_ane[] = {0x01, 0x03, 0x00, 0x00, 0x00, 0x60, 0x45, 0xE2};
+
 void init_hywdc6e()
 {
     pinMode(RS485_DE_PIN, OUTPUT);   // Set the DE pin to OUTPUT

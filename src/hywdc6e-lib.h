@@ -25,7 +25,6 @@
 #define DEBUG true // Enable debug output
 #endif
 
-uint8_t request_ane[] = {0x01, 0x03, 0x00, 0x00, 0x00, 0x60, 0x45, 0xE2};
 
 /**
  * @brief Initializes the HY-WDC6E anemometer module.
