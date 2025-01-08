@@ -1,6 +1,3 @@
-#ifndef MY_LIBRARY_H
-#define MY_LIBRARY_H
-
 #include <Arduino.h>
 #include <HardwareSerial.h>
 
