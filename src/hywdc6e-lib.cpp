@@ -35,13 +35,16 @@ void debugPrint(const uint8_t *data, size_t length)
     }
 }
 
-short get_wind_direction(const uint8_t *response) {
+short get_wind_direction(const uint8_t *response)
+{
     unsigned char rawWindDirection[2] = {response[5], response[6]};
 
     Serial.print("rawWindDirection: ");
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 2; i++)
+    {
         Serial.print(rawWindDirection[i], HEX);
-        if (i < 1) Serial.print(", ");
+        if (i < 1)
+            Serial.print(", ");
     }
     Serial.println();
 
@@ -52,11 +55,13 @@ short get_wind_direction(const uint8_t *response) {
     return windDirection;
 }
 
-float get_wind_speed(const uint8_t *response) {
+float get_wind_speed(const uint8_t *response)
+{
     unsigned char rawWindSpeed[4] = {response[7], response[8], response[9], response[10]};
 
     Serial.print("rawWindSpeed: ");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         Serial.print(rawWindSpeed[i], HEX);
         Serial.print(",");
     }
@@ -69,11 +74,13 @@ float get_wind_speed(const uint8_t *response) {
     return windSpeed;
 }
 
-float get_temperature(const uint8_t *response) {
+float get_temperature(const uint8_t *response)
+{
     unsigned char rawTemperature[4] = {response[11], response[12], response[13], response[14]};
 
     Serial.print("rawTemperature: ");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         Serial.print(rawTemperature[i], HEX);
         Serial.print(",");
     }
@@ -86,11 +93,13 @@ float get_temperature(const uint8_t *response) {
     return temperature;
 }
 
-float get_humidity(const uint8_t *response) {
+float get_humidity(const uint8_t *response)
+{
     unsigned char rawHumidity[4] = {response[15], response[16], response[17], response[18]};
 
     Serial.print("rawHumidity: ");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         Serial.print(rawHumidity[i], HEX);
         Serial.print(",");
     }
@@ -103,11 +112,13 @@ float get_humidity(const uint8_t *response) {
     return humidity;
 }
 
-float get_pressure(const uint8_t *response) {
+float get_pressure(const uint8_t *response)
+{
     unsigned char rawPressure[4] = {response[19], response[20], response[21], response[22]};
 
     Serial.print("rawPressure: ");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         Serial.print(rawPressure[i], HEX);
         Serial.print(",");
     }
@@ -161,36 +172,41 @@ unsigned short convertToShortLittleEndian(const uint8_t *data)
     return (data[0] << 8) | data[1]; // Combine two bytes (Little Endian)
 }
 
-void get_raw_response(uint8_t *buffer, size_t bufferSize, size_t *bytesRead) {
+void get_raw_response(uint8_t *buffer, size_t bufferSize, size_t *bytesRead)
+{
 
-    //pulire il buffer
+    // pulire il buffer
     for (int i = 0; i < bufferSize; i++)
     {
         buffer[i] = 0;
     }
-  // Inizializza il contatore dei byte letti
-  *bytesRead = 0;
-  unsigned long startTime = millis();
-
-  while (millis() - startTime < RESPONSE_TIMEOUT) {
-    if (Serial1.available() > 0) {
-      buffer[*bytesRead] = Serial1.read();
-      (*bytesRead)++;
-      if (*bytesRead >= bufferSize)
-        break;
+    // Inizializza il contatore dei byte letti
+    *bytesRead = 0;
+    unsigned long startTime = millis();
+    Serial.println("Waiting for response...");
+    while (millis() - startTime < RESPONSE_TIMEOUT)
+    {
+        delay(10);
+        if (Serial1.available() > 0)
+        {
+            delay(10);
+            buffer[*bytesRead] = Serial1.read();
+            (*bytesRead)++;
+            if (*bytesRead >= bufferSize)
+                break;
+        }
     }
-  }
 
-  // Print debug information if no response
-  if (*bytesRead == 0) {
-    Serial.println("No response received (timeout). Checking available bytes:");
-    Serial.println(Serial1.available());  // Print available bytes
-  }
-
-    
+    // Print debug information if no response
+    if (*bytesRead == 0)
+    {
+        Serial.println("No response received (timeout). Checking available bytes:");
+        Serial.println(Serial1.available()); // Print available bytes
+    }
 }
 
-bool is_connected(){
+bool is_connected()
+{
     sendModbusRequest();
 
     uint8_t response[256];
