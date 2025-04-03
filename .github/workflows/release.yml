@@ -1,0 +1,78 @@
+name: Auto Version & Publish to PlatformIO
+
+on:
+  push:
+    branches:
+      - main  # Esegui il workflow quando viene fatto un push su "main"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install platformio semver
+
+      - name: Extract last version
+        id: get_version
+        run: |
+          VERSION=$(jq -r .version library.json)
+          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Get commit message
+        id: commit_message
+        run: echo "MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+
+      - name: Determine next version
+        id: versioning
+        run: |
+          python - <<EOF
+          import os, re, semver, json
+
+          commit_msg = os.getenv("MESSAGE", "").lower()
+          current_version = os.getenv("CURRENT_VERSION", "0.1.0")
+          new_version = semver.VersionInfo.parse(current_version)
+
+          if "breaking change" in commit_msg:
+              new_version = new_version.bump_major()
+          elif "feat:" in commit_msg:
+              new_version = new_version.bump_minor()
+          elif "fix:" in commit_msg:
+              new_version = new_version.bump_patch()
+
+          print(f"New version: {new_version}")
+          
+          # Update library.json
+          with open("library.json", "r") as f:
+              data = json.load(f)
+
+          data["version"] = str(new_version)
+
+          with open("library.json", "w") as f:
+              json.dump(data, f, indent=2)
+
+          with open(os.getenv("GITHUB_ENV"), "a") as env:
+              env.write(f"NEW_VERSION={new_version}\n")
+          EOF
+
+      - name: Commit and Tag New Version
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add library.json
+          git commit -m "chore: bump version to $NEW_VERSION"
+          git tag v$NEW_VERSION
+          git push origin main --tags
+
+      - name: Login to PlatformIO
+        run: pio account login --username "${{ secrets.PLATFORMIO_USERNAME }}" --password "${{ secrets.PLATFORMIO_PASSWORD }}"
+
+      - name: Publish library
+        run: pio package publish
