@@ -39,7 +39,7 @@ short get_wind_direction(const uint8_t *response)
 {
     unsigned char rawWindDirection[2] = {response[5], response[6]};
 
-    Serial.print("rawWindDirection: ");
+    Serial.print("raw_WindDirection: ");
     for (int i = 0; i < 2; i++)
     {
         Serial.print(rawWindDirection[i], HEX);
@@ -59,7 +59,7 @@ float get_wind_speed(const uint8_t *response)
 {
     unsigned char rawWindSpeed[4] = {response[7], response[8], response[9], response[10]};
 
-    Serial.print("rawWindSpeed: ");
+    Serial.print("raw_WindSpeed: ");
     for (int i = 0; i < 4; i++)
     {
         Serial.print(rawWindSpeed[i], HEX);
@@ -78,7 +78,7 @@ float get_temperature(const uint8_t *response)
 {
     unsigned char rawTemperature[4] = {response[11], response[12], response[13], response[14]};
 
-    Serial.print("rawTemperature: ");
+    Serial.print("raw_Temperature: ");
     for (int i = 0; i < 4; i++)
     {
         Serial.print(rawTemperature[i], HEX);
@@ -97,7 +97,7 @@ float get_humidity(const uint8_t *response)
 {
     unsigned char rawHumidity[4] = {response[15], response[16], response[17], response[18]};
 
-    Serial.print("rawHumidity: ");
+    Serial.print("raw_Humidity: ");
     for (int i = 0; i < 4; i++)
     {
         Serial.print(rawHumidity[i], HEX);
@@ -116,7 +116,7 @@ float get_pressure(const uint8_t *response)
 {
     unsigned char rawPressure[4] = {response[19], response[20], response[21], response[22]};
 
-    Serial.print("rawPressure: ");
+    Serial.print("raw_Pressure: ");
     for (int i = 0; i < 4; i++)
     {
         Serial.print(rawPressure[i], HEX);
