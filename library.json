@@ -1,26 +1,26 @@
 {
-    "name": "hywdc6e-lib",
-    "version": "1.0.0",
-    "description": "Lbrary for RS85 Anemometer HY-WDC6E",
-    "keywords": "Anemometer, RS485, HY-WDC6E, Sensesquare",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Sense-Square/Library-anemometer-HY-WDC6E-Arduino.git"
+  "name": "hywdc6e-lib",
+  "version": "2.0.0",
+  "description": "Lbrary for RS85 Anemometer HY-WDC6E",
+  "keywords": "Anemometer, RS485, HY-WDC6E, Sensesquare",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sense-Square/Library-anemometer-HY-WDC6E-Arduino.git"
+  },
+  "authors": [
+    {
+      "name": "Rammszy Careem",
+      "email": "rammszy.careem@sensesquare.eu"
     },
-    "authors": [
-        {
-            "name": "Rammszy Careem",
-            "email": "rammszy.careem@sensesquare.eu"
-        },
-        {
-            "name": "Carmine Laudato",
-            "email": "carmine.laudato@sensesquare.eu",
-            "maintainer": true
-        }
-    ],
-    "license": "MIT",
-    "homepage": "https://www.sensesquare.eu/",
-    "dependencies": {},
-    "frameworks": "*",
-    "platforms": "*"
+    {
+      "name": "Carmine Laudato",
+      "email": "carmine.laudato@sensesquare.eu",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://www.sensesquare.eu/",
+  "dependencies": {},
+  "frameworks": "*",
+  "platforms": "*"
 }
