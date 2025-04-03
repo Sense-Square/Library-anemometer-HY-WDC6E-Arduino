@@ -75,4 +75,4 @@ jobs:
         run: pio account login --username "${{ secrets.PLATFORMIO_USERNAME }}" --password "${{ secrets.PLATFORMIO_PASSWORD }}"
 
       - name: Publish library
-        run: pio package publish
+        run: echo y | pio pkg publish
