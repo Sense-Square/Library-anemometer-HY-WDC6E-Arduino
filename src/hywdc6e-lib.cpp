@@ -13,6 +13,16 @@ void init_hywdc6e()
     Serial1.begin(9600, SERIAL_8N1, RS485_RX_PIN, RS485_TX_PIN);
 }
 
+void init_hywdc6e(int de, int re, int di, int ro)
+{
+    pinMode(de, OUTPUT);   // Set the DE pin to OUTPUT
+    pinMode(re, OUTPUT);   // Set the RE pin to OUTPUT
+    digitalWrite(de, LOW); // Start in receive mode (LOW to receive)
+    digitalWrite(re, LOW); // Start in receive mode (LOW to receive)
+
+    Serial1.begin(9600, SERIAL_8N1, ro, di);
+}
+
 void sendModbusRequest()
 {
     digitalWrite(RS485_DE_PIN, HIGH); // Set to HIGH for transmit mode (TX)

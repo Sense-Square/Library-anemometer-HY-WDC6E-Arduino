@@ -49,6 +49,19 @@ void init_hywdc6e();
  * 
  * @return true if the device is connected, false otherwise.
  */
+
+void init_hywdc6e(int de, int re, int di, int ro);
+
+/**
+ * @brief Checks if the device is connected.
+ *
+ * This function sends a Modbus request and checks the response to determine
+ * if the device is connected. It returns true if the device responds with
+ * the expected data, and false otherwise.
+ *
+ * @return true if the device is connected, false otherwise.
+ */
+
 bool is_connected();
 
 /**
