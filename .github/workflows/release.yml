@@ -62,6 +62,10 @@ jobs:
               env.write(f"NEW_VERSION={new_version}\n")
           EOF
 
+      - name: Echo new version
+        run: echo "${{secrets.PLATFORMIO_USERNAME}} ${{secrets.PLATFORMIO_PASSWORD}} $NEW_VERSION"
+  
+
       - name: Commit and Tag New Version
         run: |
           git config --global user.name "github-actions[bot]"
@@ -71,9 +75,7 @@ jobs:
           git tag v$NEW_VERSION
           git push origin main --tags
 
-      - name: Echo new version
-        run: echo "${{secrets.PLATFORMIO_USERNAME}} ${{secrets.PLATFORMIO_PASSWORD}} $NEW_VERSION"
-
+      
       - name: Login to PlatformIO
         run: pio account login --username "${{ secrets.PLATFORMIO_USERNAME }}" --password "${{ secrets.PLATFORMIO_PASSWORD }}"
 
