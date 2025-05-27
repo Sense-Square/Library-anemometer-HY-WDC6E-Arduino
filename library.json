@@ -1,6 +1,6 @@
 {
   "name": "hywdc6e-lib",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "Lbrary for RS85 Anemometer HY-WDC6E",
   "keywords": "Anemometer, RS485, HY-WDC6E, Sensesquare",
   "repository": {
